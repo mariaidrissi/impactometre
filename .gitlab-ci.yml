@@ -10,7 +10,7 @@ before_script:
 stages:
   - lint
   - test
-  - production
+  - deploy
 
 eslint:
   stage: lint
@@ -33,11 +33,10 @@ unit-tests:
   tags:
   - docker
   
- production:
-    type: deploy
-    stage: production
-    image: ruby:latest
-    script:
-        - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
-    only:
-        - master
+production:
+  stage: deploy
+  image: ruby:latest
+  script:
+  - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
+  only:
+  - master
