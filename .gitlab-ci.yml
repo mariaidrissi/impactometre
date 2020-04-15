@@ -1,12 +1,16 @@
 image: node:latest
 
 before_script:
+  - apt-get update -qy
+  - apt-get install -y ruby-dev
+  - gem install dpl
   - npm install --save-dev eslint eslint-config-standard eslint-plugin-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node
   - npm install --save-dev stylelint stylelint-scss stylelint-config-recommended-scss
   - npm i
 stages:
   - lint
   - test
+  - production
 
 eslint:
   stage: lint
@@ -28,3 +32,12 @@ unit-tests:
   - ./node_modules/mocha/bin/mocha --recursive \"test/\"
   tags:
   - docker
+  
+ production:
+    type: deploy
+    stage: production
+    image: ruby:latest
+    script:
+        - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
+    only:
+        - master
