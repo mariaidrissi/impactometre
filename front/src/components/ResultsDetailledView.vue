@@ -1,15 +1,15 @@
 <template>
   <div class="results-detailled-view">
     <div class="results-detailled-view-header">
-      <h1>Titre : {{ selected_view }}</h1>
+      <h1>Titre : {{ selectedView }}</h1>
       <button class="close-btn" @click.prevent="hideView">&#10006;</button>
     </div>
     <div class="results-detailled-view-content">
-      <div class="results-chart-detailled">
+      <div class="results-chart-detailled" v-if="selectedView">
         <ResultsChart
-          :chart-data="$store.state.impact_on_spheres_detailled[selected_view]"
+          :chart-data="chartData"
           :options="chartOptions"
-          :height="50"
+          :height="80"
         ></ResultsChart>
       </div>
       <p>
@@ -26,7 +26,7 @@ import ResultsChart from "./ResultsChart.js";
 import store from "../store/MainStore.js";
 
 export default {
-  props: ["selected_view"],
+  props: ["selectedView"],
   store,
   components: { ResultsChart },
   methods: {
@@ -43,10 +43,15 @@ export default {
         },
         scales: {
           xAxes: [{ stacked: true }],
-          yAxes: [{ stacked: true }]
-        }
+          yAxes: [{ stacked: true }],
+        },
       },
     };
+  },
+  computed: {
+    chartData: function () {
+      return store.state.impact_on_spheres_detailled[this.selectedView];
+    },
   },
 };
 </script>
@@ -57,12 +62,12 @@ export default {
   flex-direction: column;
   padding: 30px;
   background: repeating-linear-gradient(
-      -45deg,
-      rgba(0,0,0,0),
-      rgba(0,0,0,0) 10px,
-      rgba(0,0,0,0.02) 10px,
-      rgba(0,0,0,0.02) 20px
-    );
+    -45deg,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0) 10px,
+    rgba(0, 0, 0, 0.02) 10px,
+    rgba(0, 0, 0, 0.02) 20px
+  );
 }
 
 /*
@@ -84,7 +89,6 @@ export default {
 .results-detailled-view-content {
   display: block;
   position: relative;
-  height: 200px;
 }
 .results-detailled-view-content p {
   /* font-style: italic; */

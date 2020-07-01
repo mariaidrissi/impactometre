@@ -3,7 +3,9 @@
     <div v-if="active" class="scenario-full">
       <div class="scenario-header" :id="title.replace(/\s/g, '')">
         <h2>{{ title }}</h2>
-        <button class="close-btn" @click.prevent="deleteScenario">&#10006;</button>
+        <button class="close-btn" @click.prevent="deleteScenario">
+          &#10006;
+        </button>
       </div>
       <div class="scenario-body">
         <div class="scenario-section">
@@ -98,7 +100,12 @@
                     {{ journey_option.french }}
                   </option>
                 </select>
-                <button class="delete-journey-btn" @click.prevent="deleteJourney(j)">-</button>
+                <button
+                  class="delete-journey-btn"
+                  @click.prevent="deleteJourney(j)"
+                >
+                  -
+                </button>
                 <br />
               </span>
             </div>
@@ -122,48 +129,26 @@
 import IncrementButton from "./IncrementButton";
 import Tooltip from "./Tooltip";
 
+import { software_options, journey_options } from "../options/options.js";
+
 export default {
   name: "Scenario",
-  props: ["title"],
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+  },
   components: {
     IncrementButton,
     Tooltip,
   },
   data() {
     return {
+      id: null,
       active: false,
-      software_options: [
-        {
-          name: "RENAVISIO",
-          french: "Renavisio",
-        },
-        {
-          name: "SKYPE",
-          french: "Skype",
-        },
-        {
-          name: "JITSI",
-          french: "Jitsi",
-        },
-        {
-          name: "HANGOUTS",
-          french: "Google Hangouts",
-        },
-        {
-          name: "other",
-          french: "Autre",
-        },
-      ],
-      journey_options: [
-        {
-          name: "PLANE_INTERCONTINENTAL_ONE_PERSON_KM",
-          french: "Avion intercontinental",
-        },
-        {
-          name: "TRAIN_HIGH_SPEED_ONE_PERSON_KM",
-          french: "TGV",
-        },
-      ],
+      software_options,
+      journey_options,
       scenario: {
         meetingDuration: 0,
         numberOfParticipants: 0,
@@ -282,7 +267,7 @@ export default {
 .close-btn {
   display: inline;
   position: relative;
-  float:right;
+  float: right;
   top: -46px;
   left: -12px;
   border: none;
@@ -296,13 +281,13 @@ export default {
   font-size: 20px;
 }
 .close-btn:hover {
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .delete-journey-btn {
   display: inline;
   position: relative;
-  float:right;
+  float: right;
   top: -46px;
   left: -12px;
   border: none;
@@ -320,7 +305,7 @@ export default {
 }
 
 .delete-journey-btn:hover {
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 /*
@@ -355,7 +340,7 @@ export default {
 
 .select-journey {
   margin-left: 10px;
-  width: 120px !important;
+  max-width: 40%;
 }
 /*
  *    BUTTONS
@@ -368,7 +353,7 @@ export default {
   margin-right: 15px;
 }
 .scenario-line select {
-  width: 150px;
+  max-width: 35%;
   border-width: 1px;
   border-style: solid;
   border-color: #bcbcbc;
@@ -398,7 +383,9 @@ export default {
 /*
  *    SCENARIO-EMPTY
  */
-
+.scenario-body {
+  margin-top: 20px;
+}
 .scenario-empty {
   /* height: 80%; */
   min-height: 80%;

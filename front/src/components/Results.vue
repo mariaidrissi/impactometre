@@ -7,7 +7,7 @@
           class="results-header-btn-reload"
           @click.prevent="updateResults"
         >
-          Actualiser
+          Calculer
         </button>
         <button class="results-header-btn-export">Exporter</button>
       </div>
@@ -183,7 +183,7 @@ export default {
 }
 
 .results-header-btn-displayed-view {
-  margin-bottom:10px;
+  margin-bottom: 10px;
   margin-left: 4px;
 }
 
