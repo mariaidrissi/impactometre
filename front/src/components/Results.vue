@@ -38,6 +38,7 @@
         <h3>{{ section.title }}</h3>
         <div class="results-chart">
           <ResultsChart
+            v-if="api_loaded"
             :chart-data="$store.state.impact_on_spheres[section.name]"
             :options="chartOptions"
             :width="50"
@@ -68,26 +69,25 @@ import store from "../store/MainStore.js";
 export default {
   components: { ResultsChart },
   store: store,
-  // TODO: add loaded data to wait for API call to finish.
   data() {
     return {
       scenarios_json: [],
       displayed_view: "comparatif",
       sections_comparatif: [
         {
-          name: "sante_humaine",
+          name: "human_health",
           title: "Santé Humaine",
         },
         {
-          name: "qualite_ecosysteme",
+          name: "ecosystem_quality",
           title: "Qualité de l'écosystème",
         },
         {
-          name: "changement_climatique",
+          name: "climate_change",
           title: "Changement Climatique",
         },
         {
-          name: "ressources",
+          name: "resources",
           title: "Ressources",
         },
       ],
@@ -131,6 +131,11 @@ export default {
     },
     change_displayed_view(choice) {
       this.displayed_view = choice;
+    },
+  },
+  computed: {
+    api_loaded: function () {
+      return store.state.api_loaded;
     },
   },
 };

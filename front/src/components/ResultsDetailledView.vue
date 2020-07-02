@@ -7,6 +7,7 @@
     <div class="results-detailled-view-content">
       <div class="results-chart-detailled" v-if="selectedView">
         <ResultsChart
+          v-if="api_loaded"
           :chart-data="chartData"
           :options="chartOptions"
           :height="80"
@@ -51,6 +52,9 @@ export default {
   computed: {
     chartData: function () {
       return store.state.impact_on_spheres_detailled[this.selectedView];
+    },
+    api_loaded: function () {
+      return store.state.api_loaded;
     },
   },
 };
